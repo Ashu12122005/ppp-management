@@ -1,0 +1,131 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h2 style="margin-bottom: 20px;">📊 Teacher Dashboard</h2>
+
+<div class="summary-cards">
+
+    <div class="card">
+        <h4>Total Students</h4>
+        <div class="big">{{ total_students }}</div>
+    </div>
+
+    <div class="card">
+        <h4>PPP Entries</h4>
+        <div class="big">{{ total_ppp }}</div>
+    </div>
+
+    <div class="card">
+        <h4>Total Fees Collected</h4>
+        <div class="big">₹ {{ total_fees }}</div>
+    </div>
+
+    <div class="card">
+        <h4>Today's Attendance</h4>
+        <div class="big">P:{{ present_count }} | A:{{ absent_count }} | L:{{ leave_count }}</div>
+    </div>
+</div>
+
+<!-- ==================== CHARTS ==================== -->
+
+<div class="charts-grid">
+
+    <!-- Attendance Pie -->
+    <div class="chart-box">
+        <h4>Attendance Overview</h4>
+        <canvas id="attendancePie"></canvas>
+    </div>
+
+    <!-- PPP Bar -->
+    <div class="chart-box">
+        <h4>PPP Status</h4>
+        <canvas id="pppBar"></canvas>
+    </div>
+
+    <!-- Fees Line -->
+    <div class="chart-box">
+        <h4>Monthly Fees Collection</h4>
+        <canvas id="feesLine"></canvas>
+    </div>
+
+</div>
+
+<!-- ==================== LATEST STUDENTS ==================== -->
+
+<div class="recent-box" style="margin-top: 30px;">
+    <h3>🧑‍🎓 Latest Students</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Roll No</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in latest_students %}
+            <tr>
+                <td>{{ s.admission_name }}</td>
+                <td>{{ s.class_roll_no }}</td>
+                <td>{{ s.email }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="3">No students found</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+<!-- ==================== CHART.JS ==================== -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // Attendance Pie
+    new Chart(document.getElementById("attendancePie"), {
+        type: "pie",
+        data: {
+            labels: {{ attendance_labels_json|safe }},
+            datasets: [{
+                data: {{ attendance_values_json|safe }},
+                backgroundColor: ["#28a745", "#dc3545", "#ffc107"]
+            }]
+        }
+    });
+
+    // PPP Bar
+    new Chart(document.getElementById("pppBar"), {
+        type: "bar",
+        data: {
+            labels: {{ ppp_labels_json|safe }},
+            datasets: [{
+                data: {{ ppp_values_json|safe }},
+                backgroundColor: ["#ffc107", "#007bff", "#28a745"]
+            }]
+        }
+    });
+
+    // Fees Line
+    new Chart(document.getElementById("feesLine"), {
+        type: "line",
+        data: {
+            labels: {{ fees_months_json|safe }},
+            datasets: [{
+                label: "₹ Collected",
+                data: {{ fees_values_json|safe }},
+                borderColor: "#007bff",
+                borderWidth: 2,
+                fill: false
+            }]
+        }
+    });
+
+});
+</script>
+
+
+{% endblock %}

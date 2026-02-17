@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPP Management System</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+<!-- ================== NAVBAR ================== -->
+<nav class="main-nav">
+    <a href="{% url 'core:dashboard' %}" class="nav-brand">PPP Management</a>
+
+    <div class="nav-center">
+        <a href="{% url 'core:dashboard' %}">📊 Dashboard</a>
+        <a href="{% url 'core:student_list' %}">🧑‍🎓 Students</a>
+        <a href="{% url 'core:ppp_list' %}">📘 PPP</a>
+        <a href="{% url 'core:attendance_list' %}">📝 Attendance</a>
+        <a href="{% url 'core:fees_list' %}">💰 Fees</a>
+        <a href="{% url 'core:notices' %}">📢 Notices</a>
+
+    </div>
+
+    <div class="nav-right">
+        {% if user.is_authenticated %}
+            <span class="user-name">👤 {{ user.username }}</span>
+
+            {% if user.is_staff %}
+                <span class="role-badge teacher-role">Teacher</span>
+            {% else %}
+                <span class="role-badge student-role">Student</span>
+            {% endif %}
+
+            <a href="{% url 'core:logout' %}" class="logout">Logout</a>
+        {% else %}
+            <a href="{% url 'core:login' %}" class="login">Login</a>
+        {% endif %}
+    </div>
+</nav>
+
+<!-- ================== CONTENT BOX ================== -->
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
+
+</body>
+</html>

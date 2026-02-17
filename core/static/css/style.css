@@ -1,0 +1,242 @@
+/* ===================== GLOBAL ===================== */
+:root {
+    --bg: #f4f6f8;
+    --card: #ffffff;
+    --muted: #6b7280;
+    --primary: #007bff;
+    --accent: #1f2937;
+    --success: #28a745;
+    --danger: #dc3545;
+    --warning: #ffc107;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background: var(--bg);
+    color: #111827;
+}
+
+/* ===================== CONTAINER ===================== */
+.container {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 18px;
+}
+
+/* ===================== CARD ===================== */
+.card, .chart-box, .recent-box, .notice-card, .profile-card {
+    background: var(--card);
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+}
+
+/* ===================== HEADINGS ===================== */
+h1, h2, h3 {
+    color: #0f172a;
+    margin: 0 0 8px;
+}
+
+/* ===================== BUTTONS ===================== */
+button, .btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #fff;
+}
+
+.btn.add {
+    background: #20c997;
+    color: #fff;
+}
+
+.btn-danger {
+    background: var(--danger);
+    color: #fff;
+}
+
+/* ===================== INPUTS ===================== */
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #e6e6e9;
+    font-size: 14px;
+    margin: 6px 0 14px;
+    background: #fff;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59,130,246,0.08);
+}
+
+/* ===================== TABLES ===================== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th {
+    background: var(--accent);
+    color: #fff;
+    padding: 10px;
+    text-align: left;
+}
+
+table td {
+    padding: 10px;
+    border-bottom: 1px solid #eef2f6;
+}
+
+/* ===================== DASHBOARD ===================== */
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    gap: 16px;
+    margin: 12px 0 22px;
+}
+
+.card .big {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+    gap: 18px;
+    margin-top: 18px;
+}
+
+/* ===================== NAVIGATION ===================== */
+.main-nav {
+    width: 100%;
+    background: #111827;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 30px;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}
+
+.nav-brand {
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+}
+
+.nav-center {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-center a {
+    color: #e5e7eb;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.2s ease;
+}
+
+.nav-center a:hover {
+    color: #60a5fa;
+    transform: translateY(-2px);
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-name {
+    color: #fbbf24;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.role-badge {
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.teacher-role {
+    background: #3b82f6;
+    color: white;
+}
+
+.student-role {
+    background: #10b981;
+    color: white;
+}
+
+.logout, .login {
+    background: #ef4444;
+    color: white !important;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.logout:hover, .login:hover {
+    background: #dc2626;
+}
+
+/* ===================== LOGIN PAGE ===================== */
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 20px);
+    padding: 20px;
+}
+
+.login-card {
+    width: 360px;
+    background: #fff;
+    padding: 28px;
+    border-radius: 12px;
+    box-shadow: 0 8px 28px rgba(2,6,23,0.08);
+}
+
+.login-card h2 {
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 900px) {
+    .summary-cards {
+        grid-template-columns: 1fr;
+    }
+    .container {
+        padding: 12px;
+    }
+    .nav-center {
+        display: none; /* mobile friendly */
+    }
+}

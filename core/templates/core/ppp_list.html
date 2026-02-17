@@ -1,0 +1,104 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    body {
+        background: #f5f6fa;
+        font-family: "Poppins", sans-serif;
+    }
+
+    .container-box {
+        max-width: 1150px;
+        margin: 35px auto;
+        background: #fff;
+        padding: 25px;
+        border-radius: 14px;
+        box-shadow: 0px 6px 18px rgba(0,0,0,0.12);
+    }
+
+    .title {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 25px;
+    }
+
+    .status-pending {
+        color: #f59f00;
+        font-weight: 600;
+    }
+
+    .status-ongoing {
+        color: #1971c2;
+        font-weight: 600;
+    }
+
+    .status-completed {
+        color: #2f9e44;
+        font-weight: 600;
+    }
+
+    th {
+        white-space: nowrap;
+    }
+
+    table td, table th {
+        vertical-align: middle;
+    }
+</style>
+
+<div class="container-box">
+    <h2 class="title">📘 PPP Entries</h2>
+
+    {% if messages %}
+        {% for msg in messages %}
+            <div class="alert alert-{{ msg.tags }}">{{ msg }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="table-responsive mt-3">
+        <table class="table table-bordered table-striped table-hover table-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Date</th>
+                    <th>Student</th>
+                    <th>Activity</th>
+                    <th>Status</th>
+                    <th>Created By</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for p in ppp_entries %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ p.date }}</td>
+                    <td>{{ p.student.admission_name }}</td>
+                    <td>{{ p.activity|truncatewords:12 }}</td>
+
+                    <td>
+                        {% if p.status == "pending" %}
+                            <span class="status-pending">Pending</span>
+                        {% elif p.status == "ongoing" %}
+                            <span class="status-ongoing">Ongoing</span>
+                        {% else %}
+                            <span class="status-completed">Completed</span>
+                        {% endif %}
+                    </td>
+
+                    <td>{{ p.created_by.username }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">No PPP entries recorded yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

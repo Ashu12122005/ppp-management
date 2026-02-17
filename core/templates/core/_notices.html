@@ -1,0 +1,32 @@
+<div class="notice-box">
+
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <h4 class="notice-title">📢 Latest Notices</h4>
+
+        <a href="{% url 'core:notice_add' %}" class="btn btn-sm btn-primary">
+            + Add Notice
+        </a>
+    </div>
+
+    {% if notices %}
+        <ul class="notice-list">
+            {% for n in notices %}
+                <li class="notice-item">
+                    <strong>{{ n.title }}</strong><br>
+
+                    <small>
+                        {{ n.created_at|date:"d M Y" }}
+                        {% if n.valid_until %}
+                            | Valid till: {{ n.valid_until|date:"d M Y" }}
+                        {% endif %}
+                    </small>
+
+                    <p>{{ n.message|truncatechars:120 }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No notices available.</p>
+    {% endif %}
+
+</div>

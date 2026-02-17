@@ -1,0 +1,15 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<h3>📥 Bulk Attendance Upload</h3>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="excel_file" required class="form-control mb-3">
+    <button class="btn btn-success">Upload Attendance</button>
+</form>
+
+<p class="mt-3 text-muted">
+    Columns required: department, class_roll_no, date, status, remarks
+</p>
+{% endblock %}

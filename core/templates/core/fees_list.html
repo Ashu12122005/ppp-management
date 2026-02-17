@@ -1,0 +1,112 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    body {
+        background: #f5f6fa;
+        font-family: "Poppins", sans-serif;
+    }
+
+    .container-box {
+        max-width: 1200px;
+        margin: 40px auto;
+        background: white;
+        padding: 25px;
+        border-radius: 14px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    }
+
+    .title {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 25px;
+    }
+
+    th {
+        white-space: nowrap;
+    }
+
+    table td, table th {
+        vertical-align: middle;
+    }
+
+    .paid {
+        color: #2f9e44;
+        font-weight: 600;
+    }
+
+    .pending {
+        color: #d6336c;
+        font-weight: 600;
+    }
+
+    .partial {
+        color: #f59f00;
+        font-weight: 600;
+    }
+</style>
+
+<div class="container-box">
+
+    <h2 class="title">💳 Fee Payment Records</h2
+    <div class="d-flex gap-2 mb-3">
+        <a href="{% url 'core:fees_upload' %}" class="btn btn-success btn-sm">⬆ Upload Fees</a>
+        <a href="{% url 'core:fees_add' %}" class="btn btn-primary btn-sm">＋ Add Fee</a>
+        <a href="{% url 'core:fees_export' %}" class="btn btn-secondary btn-sm">⬇ Export</a>
+    </div>
+
+
+    <div class="table-responsive mt-3">
+        <table class="table table-bordered table-striped table-hover table-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Date</th>
+                    <th>Student</th>
+                    <th>Roll No</th>
+                    <th>Amount</th>
+                    <th>Mode</th>
+                    <th>Status</th>
+                    <th>Received By</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for f in payments %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ f.date }}</td>
+                    <td>{{ f.student.admission_name }}</td>
+                    <td>{{ f.student.class_roll_no }}</td>
+                    <td>₹ {{ f.amount }}</td>
+                    <td>{{ f.get_payment_mode_display }}</td>
+
+                    <td>
+                        {% if f.status == "paid" %}
+                            <span class="paid">Paid</span>
+                        {% elif f.status == "partial" %}
+                            <span class="partial">Partial</span>
+                        {% else %}
+                            <span class="pending">Pending</span>
+                        {% endif %}
+                    </td>
+
+                    <td>{{ f.received_by.username }}</td>
+                    <td>{{ f.remarks }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="9" class="text-center">No fee records available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

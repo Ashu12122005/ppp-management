@@ -1,0 +1,26 @@
+{% extends "core/base.html" %}
+{% block content %}
+
+<div class="container-box">
+    <h2 class="title">⬆ Upload Fee Records (Excel)</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="form-label">Select Excel File</label>
+            <input type="file" name="excel_file" class="form-control" required>
+        </div>
+
+        <button class="btn btn-success">Upload Fees</button>
+        <a href="{% url 'core:fees_list' %}" class="btn btn-secondary ms-2">Cancel</a>
+    </form>
+
+    <hr>
+    <p class="text-muted">
+        Required columns:
+        <code>date, class_roll_no, amount, payment_mode, status, remarks</code>
+    </p>
+</div>
+
+{% endblock %}

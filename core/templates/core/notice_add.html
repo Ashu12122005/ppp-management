@@ -1,0 +1,18 @@
+{% extends "core/base.html" %}
+{% block content %}
+
+<h2>Add Notice</h2>
+
+<form method="post">
+    {% csrf_token %}
+
+    <label>Title</label>
+    <input type="text" name="title" class="form-control" required>
+
+    <label>Message</label>
+    <textarea name="message" class="form-control" rows="4" required></textarea>
+
+    <button type="submit" class="btn btn-primary mt-2">Submit</button>
+</form>
+
+{% endblock %}

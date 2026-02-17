@@ -1,0 +1,49 @@
+{% extends "core/base.html" %}
+{% block content %}
+
+<div class="container-box">
+
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+        <h2>📢 Notices</h2>
+
+        <a href="{% url 'core:notice_add' %}" class="btn btn-primary btn-sm">
+            + Add Notice
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-sm">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Message</th>
+                    <th>Created At</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for n in notices %}
+                <tr>
+                    <td>{{ n.title }}</td>
+                    <td>{{ n.message|truncatechars:80 }}</td>
+                    <td>{{ n.created_at|date:"d M Y" }}</td>
+                    <td>
+                        <a href="{% url 'core:notice_delete' n.id %}"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Delete this notice?');">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">No notices found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

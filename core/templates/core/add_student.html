@@ -1,0 +1,130 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>
+            {% if object %}
+                ✏️ Edit Student
+            {% else %}
+                ➕ Add Student
+            {% endif %}
+        </h2>
+
+        <a href="{% url 'core:student_list' %}" class="btn btn-secondary btn-sm">
+            ⬅ Back to List
+        </a>
+    </div>
+
+    <!-- Messages -->
+    {% if messages %}
+        {% for msg in messages %}
+            <div class="alert alert-{{ msg.tags }} mt-2">{{ msg }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Student Form -->
+    <form method="POST" enctype="multipart/form-data" class="card shadow-sm p-4">
+        {% csrf_token %}
+
+        <!-- BASIC -->
+        <h5 class="mb-3">🧑‍🎓 Basic Details</h5>
+        <div class="row mb-3">
+            <div class="col-md-4">{{ form.slno.label_tag }} {{ form.slno }}</div>
+            <div class="col-md-4">{{ form.admission_name.label_tag }} {{ form.admission_name }}</div>
+            <div class="col-md-4">{{ form.department.label_tag }} {{ form.department }}</div>
+        </div>
+
+        <!-- JOINING -->
+        <h5 class="mb-3 mt-4">📝 Joining Information</h5>
+        <div class="row mb-3">
+            <div class="col-md-4">{{ form.date_of_joining.label_tag }} {{ form.date_of_joining }}</div>
+            <div class="col-md-4">{{ form.class_roll_no.label_tag }} {{ form.class_roll_no }}</div>
+            <div class="col-md-4">{{ form.exam_roll_no.label_tag }} {{ form.exam_roll_no }}</div>
+        </div>
+
+        <!-- PERSONAL -->
+        <h5 class="mb-3 mt-4">👤 Personal Information</h5>
+        <div class="row mb-3">
+            <div class="col-md-4">{{ form.gender.label_tag }} {{ form.gender }}</div>
+            <div class="col-md-4">{{ form.category.label_tag }} {{ form.category }}</div>
+            <div class="col-md-4">{{ form.dob.label_tag }} {{ form.dob }}</div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-4">{{ form.mobile.label_tag }} {{ form.mobile }}</div>
+            <div class="col-md-4">{{ form.email.label_tag }} {{ form.email }}</div>
+            <div class="col-md-4">{{ form.aadhaar.label_tag }} {{ form.aadhaar }}</div>
+        </div>
+
+        <!-- PARENTS -->
+        <h5 class="mb-3 mt-4">👪 Parents</h5>
+        <div class="row mb-3">
+            <div class="col-md-6">{{ form.father_name.label_tag }} {{ form.father_name }}</div>
+            <div class="col-md-6">{{ form.mother_name.label_tag }} {{ form.mother_name }}</div>
+        </div>
+
+        <!-- ADDRESS -->
+        <h5 class="mb-3 mt-4">🏠 Address</h5>
+        <div class="row mb-3">
+            <div class="col-md-6">{{ form.present_address.label_tag }} {{ form.present_address }}</div>
+            <div class="col-md-6">{{ form.permanent_address.label_tag }} {{ form.permanent_address }}</div>
+        </div>
+
+        <!-- 10th DETAILS -->
+        <h5 class="mb-3 mt-4">📘 10th Details</h5>
+        <div class="row mb-3">
+            <div class="col-md-4">{{ form.school_10.label_tag }} {{ form.school_10 }}</div>
+            <div class="col-md-4">{{ form.board_10.label_tag }} {{ form.board_10 }}</div>
+            <div class="col-md-4">{{ form.year_10.label_tag }} {{ form.year_10 }}</div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-4">{{ form.percentage_10.label_tag }} {{ form.percentage_10 }}</div>
+        </div>
+
+        <!-- 12th DETAILS -->
+        <h5 class="mb-3 mt-4">📙 12th / Intermediate Details</h5>
+        <div class="row mb-3">
+            <div class="col-md-4">{{ form.school_12.label_tag }} {{ form.school_12 }}</div>
+            <div class="col-md-4">{{ form.board_12.label_tag }} {{ form.board_12 }}</div>
+            <div class="col-md-4">{{ form.year_12.label_tag }} {{ form.year_12 }}</div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-3">{{ form.stream_12.label_tag }} {{ form.stream_12 }}</div>
+            <div class="col-md-3">{{ form.percentage_12.label_tag }} {{ form.percentage_12 }}</div>
+            <div class="col-md-3">{{ form.regd_no_12.label_tag }} {{ form.regd_no_12 }}</div>
+            <div class="col-md-3">{{ form.clc_no.label_tag }} {{ form.clc_no }}</div>
+        </div>
+
+        <!-- GRADUATION DETAILS -->
+        <h5 class="mb-3 mt-4">🎓 Graduation</h5>
+        <div class="row mb-3">
+            <div class="col-md-4">{{ form.grad_stream.label_tag }} {{ form.grad_stream }}</div>
+            <div class="col-md-4">{{ form.grad_percentage.label_tag }} {{ form.grad_percentage }}</div>
+            <div class="col-md-4">{{ form.grad_regd_no.label_tag }} {{ form.grad_regd_no }}</div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-12">{{ form.grad_college.label_tag }} {{ form.grad_college }}</div>
+        </div>
+
+        <!-- PHOTO -->
+        <h5 class="mb-3 mt-4">🖼 Photo</h5>
+        <div class="row mb-3">
+            <div class="col-md-4">{{ form.photo.label_tag }} {{ form.photo }}</div>
+        </div>
+
+        <!-- SUBMIT -->
+        <button class="btn btn-dark w-100 mt-3">
+            {% if object %}Update{% else %}Save{% endif %}
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

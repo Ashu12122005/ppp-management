@@ -1,0 +1,169 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile | PPP Management</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f5f6fa;
+            font-family: "Poppins", sans-serif;
+        }
+
+        .profile-container {
+            max-width: 1100px;
+            margin: 35px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+        }
+
+        .profile-header {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .profile-pic {
+            width: 130px;
+            height: 130px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 3px solid #4c6ef5;
+        }
+
+        .name-title {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        .info-table td {
+            padding: 6px 4px;
+            font-size: 15px;
+        }
+
+        .summary-box {
+            background: #eef2ff;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="profile-container">
+
+    <!-- ================= Header ================= -->
+    <div class="profile-header">
+        {% if student.photo %}
+            <img src="{{ student.photo.url }}" class="profile-pic">
+        {% else %}
+            <img src="https://ui-avatars.com/api/?name={{ student.admission_name }}&background=4c6ef5&color=fff" class="profile-pic">
+        {% endif %}
+
+        <div>
+            <div class="name-title">{{ student.admission_name }}</div>
+            <div class="text-muted">
+                Roll: {{ student.class_roll_no }} |
+                Exam: {{ student.exam_roll_no }}
+            </div>
+            <div class="fw-semibold mt-1">{{ student.email }}</div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Attendance Summary -->
+    <h4 class="section-title">Attendance Summary</h4>
+    <div class="row text-center">
+        <div class="col summary-box">
+            <h2 class="text-success">{{ total_present }}</h2>
+            Present
+        </div>
+        <div class="col summary-box">
+            <h2 class="text-danger">{{ total_absent }}</h2>
+            Absent
+        </div>
+        <div class="col summary-box">
+            <h2 class="text-warning">{{ total_leave }}</h2>
+            Leave
+        </div>
+    </div>
+
+    <!-- Fees Summary -->
+    <h4 class="section-title">Fees Summary</h4>
+    <div class="summary-box">
+        <h3 class="m-0">₹ {{ total_paid }}</h3>
+        <small>Total Paid</small>
+    </div>
+
+    <!-- Personal Information -->
+    <h4 class="section-title">Personal Details</h4>
+    <table class="table info-table table-borderless">
+        <tr><td><strong>DOB:</strong></td><td>{{ student.dob }}</td></tr>
+        <tr><td><strong>Gender:</strong></td><td>{{ student.gender }}</td></tr>
+        <tr><td><strong>Category:</strong></td><td>{{ student.category }}</td></tr>
+        <tr><td><strong>Aadhaar:</strong></td><td>{{ student.aadhaar }}</td></tr>
+        <tr><td><strong>Mobile:</strong></td><td>{{ student.mobile }}</td></tr>
+        <tr><td><strong>Present Address:</strong></td><td>{{ student.present_address }}</td></tr>
+        <tr><td><strong>Permanent Address:</strong></td><td>{{ student.permanent_address }}</td></tr>
+    </table>
+
+    <!-- Educational Information -->
+    <h4 class="section-title">Educational Information</h4>
+
+    <table class="table info-table table-bordered">
+        <tr class="table-secondary"><th colspan="2">+2 (Intermediate)</th></tr>
+        <tr><td><strong>Stream:</strong></td><td>{{ student.inter_stream }}</td></tr>
+        <tr><td><strong>Percentage/CGPA:</strong></td><td>{{ student.inter_percentage }}</td></tr>
+        <tr><td><strong>Regd No:</strong></td><td>{{ student.inter_regd_no }}</td></tr>
+        <tr><td><strong>College:</strong></td><td>{{ student.inter_college }}</td></tr>
+
+        <tr class="table-secondary"><th colspan="2">Graduation</th></tr>
+        <tr><td><strong>Stream:</strong></td><td>{{ student.grad_stream }}</td></tr>
+        <tr><td><strong>Percentage/CGPA:</strong></td><td>{{ student.grad_percentage }}</td></tr>
+        <tr><td><strong>Regd No:</strong></td><td>{{ student.grad_regd_no }}</td></tr>
+        <tr><td><strong>College:</strong></td><td>{{ student.grad_college }}</td></tr>
+    </table>
+
+    <!-- PPP Entries -->
+    <h4 class="section-title">Recent PPP Activities</h4>
+    <table class="table table-striped table-bordered table-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>Date</th>
+                <th>Activity</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in ppp_entries %}
+            <tr>
+                <td>{{ p.date }}</td>
+                <td>{{ p.activity|truncatewords:10 }}</td>
+                <td>{{ p.get_status_display }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="3" class="text-center">No PPP records yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>

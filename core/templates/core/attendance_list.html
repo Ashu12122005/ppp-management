@@ -1,0 +1,59 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+
+    <h2 style="margin-bottom: 20px;">
+        📊 Attendance Records
+      
+            <a href="{% url 'core:attendance_add' %}" class="btn btn-primary me-2">
+                    + Mark Attendance
+</a>
+
+<a href="{% url 'core:attendance_upload' %}" class="btn btn-success">
+    ⬆ Import Attendance
+</a>
+
+    </h2>
+
+    <div class="card">
+        <table class="table table-bordered table-striped">
+            <thead style="background: #111; color:white;">
+                <tr>
+                    <th>#</th>
+                    <th>Date</th>
+                    <th>Name</th>
+                    <th>Roll No</th>
+                    <th>Status</th>
+                    <th>Marked By</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% if records %}
+                    {% for r in records %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ r.date }}</td>
+                            <td>{{ r.student.admission_name }}</td>
+                            <td>{{ r.student.class_roll_no }}</td>
+                            <td>{{ r.get_status_display }}</td>
+                            <td>{{ r.marked_by }}</td>
+                            <td>{{ r.remarks }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="7" class="text-center">No attendance records found.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+    
+
+</div>
+        
+{% endblock %}
