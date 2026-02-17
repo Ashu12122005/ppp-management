@@ -16,7 +16,8 @@ SECRET_KEY = 'django-insecure-vtp0a^s2@bad%yirxfgnble8%hr+qz$nf_w&inc7k#7mo7m-la
 
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["ppp-management.onrender.com"]
+
 
 
 CSRF_TRUSTED_ORIGINS = [
